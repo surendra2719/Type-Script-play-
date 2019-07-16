@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<p>Looping through an array using a for in loop:</p>
+
+<p id="demo"></p>
+
+<script>
+var myObj, i, x = "";
+myObj ={
+    "data": {
+        "statuscode": "200",
+        "cmolStatusCode": "80",
+        "score": "602",
+        "reportDate": "2019-06-14",
+        "nextReportDate": "2019-07-14",
+        "previousCreditScore": "602",
+        "previousCreditReportDate": "2019-06-14",
+        "negativeAccountsCount": 2,
+        "saleableAccountsCount": 1,
+        "saleableAccountsDetails": [
+            {
+                "lenderId": "SBI Cards",
+                "productId": "Credit Cards",
+                "accountNo": "XXXXXXXXXXXXXXXX0082",
+                "accountStatusId": "Charge Off/Written Off",
+                "outStandingAmount": 100000,
+                "bestOfferAmount": 0,
+                "isLdb": false,
+                "totalPaid": 0,
+                "allocated": 1,
+                "ISARSSubscribed": 1,
+                "PSCode": "345",
+                "FacilityStatus": "00 To Start Action",
+                "CRMStatus": "80 New",
+                "PS380": null
+            },      {
+                "lenderId": "SBI Cards",
+                "productId": "Credit Cards",
+                "accountNo": "XXXXXXXXXXXXXXXX0082",
+                "accountStatusId": "Charge Off/Written Off",
+                "outStandingAmount": 100000,
+                "bestOfferAmount": 0,
+                "isLdb": false,
+                "totalPaid": 0,
+                "allocated": 1,
+                "ISARSSubscribed": 1,
+                "PSCode": "3452",
+                "FacilityStatus": "00 To Start Action",
+                "CRMStatus": "80 New",
+                "PS380": null
+            },
+         
+        ],
+        "yourBorrowings": "https://qa-dashboard3.creditmantri.in/credit-assessment/",
+        "IsCISSubscribed": 1
+    }
+}
+console.log("response before for loop",myObj.data.saleableAccountsCount )
+ for ( i=0; i<myObj.data.saleableAccountsDetails.length; i++)
+ console.log("response after for loop",myObj.data.saleableAccountsDetails[i])
+
+    
+//   x += myObj.score+ "<br>"z  
+  
+ 
+// for (i in myObj.cars) {
+//   x += myObj.cars[i] + "<br>"
+// }
+
+document.getElementById("demo").innerHTML = x;
+</script>
+
+</body>
+</html>
+<!-- for (var i=0; i<result.length; i++)
+    for (var name in result[i]) {
+        console.log("Item name: "+name);
+        console.log("Source: "+result[i][name].sourceUuid);
+        console.log("Target: "+result[i][name].targetUuid);
+    } -->
