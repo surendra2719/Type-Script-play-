@@ -1,4 +1,4 @@
-class DemoObject{
+class DemoObjects{
 empName:String;
 empId:number
 constructor(name:String,code:number){
@@ -6,5 +6,5 @@ constructor(name:String,code:number){
     this.empId=code
 }
 }
-let obj= new DemoObject("surendra",1234)
+let object= new DemoObjects("surendra",1234)
 console.log("-------object--------",obj);
