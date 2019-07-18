@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Registration Form</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="validation.js"></script>
+</head>
+
+<body>
+  <form id="registration">
+    First Name:
+    <input type="text" name="first name" id="firstNameBox">
+    <br> Last Name:
+    <input type="text" name="last name" id="lastNameBox">
+    <br> Email:
+    <input type="text" name="email" id="emailBox">
+    <br> Phone Number:
+    <input type="text" name="phone number" id="phoneNumberBox">
+    <br> Address Search:
+    <input type="text" name="address_search" id="autocomplete" onFocus="geolocate()">
+    <br> Street Address:
+    <input type="text" name="street address" id="street_number">
+    <br> Street Address Line 2(optional):
+    <input type="text" name="address2">
+    <br> Postal Code:
+    <input type="text" name="zip code" id="postal_code">
+    <br> City:
+    <input type="text" name="city" id="locality">
+    <br>
+    State/Province:
+    <input type="text" name="state" id="administrative_area_level_1">
+    <br> Country:
+    <input type="text" name="country" id="country">
+    <br> About(optional):
+    <textarea form="registration" rows="20" cols="75" placeholder="Write your biography here."></textarea>
+    <br> CV(optional):
+    <input type="file" name="CV">
+    <br>
+    <button type="button" id="submitBtn">Submit</button>
+  </form>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBBYvdPd161P_5NH-kl-Lf6q0PzMsmJynA&libraries=places&callback=initAutocomplete" async defer></script>
+</body>
+
+</html>
