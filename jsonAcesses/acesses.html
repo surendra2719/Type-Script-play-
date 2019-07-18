@@ -57,9 +57,71 @@ myObj ={
         "IsCISSubscribed": 1
     }
 }
-console.log("response before for loop",myObj.data.saleableAccountsCount )
- for ( i=0; i<myObj.data.saleableAccountsDetails.length; i++)
- console.log("response after for loop",myObj.data.saleableAccountsDetails[i])
+var response={
+    "data": {
+            "statuscode": "200",
+            "cmolStatusCode": "80",
+            "score": "597",
+            "reportDate": "2019-07-11",
+            "nextReportDate": "2019-08-10",
+            "previousCreditScore": null,
+            "previousCreditReportDate": null,
+            "negativeAccountsCount": 1,
+            "saleableAccountsCount": 1,
+            "saleableAccountsDetails": [
+                {
+                    "lenderId": "BOM",
+                    "productId": "Education Loans",
+                    "accountNo": "XXXXXXXX2664",
+                    "accountStatusId": "Loss",
+                    "outStandingAmount": null,
+                    "bestOfferAmount": 0,
+                    "isLdb": false,
+                    "totalPaid": 0,
+                    "allocated": null,
+                    "ISARSSubscribed": 1,
+                    "PSCode": "310",
+                    "FacilityStatus": "00 To Start Action",
+                    "CRMStatus": "80 New",
+                    "PS380": null
+                },    {
+                    "lenderId": "BOM1",
+                    "productId": "Education Loans",
+                    "accountNo": "XXXXXXXX2664",
+                    "accountStatusId": "Loss",
+                    "outStandingAmount": null,
+                    "bestOfferAmount": 0,
+                    "isLdb": false,
+                    "totalPaid": 0,
+                    "allocated": null,
+                    "ISARSSubscribed": 1,
+                    "PSCode": "310",
+                    "FacilityStatus": "00 To Start Action",
+                    "CRMStatus": "80 New",
+                    "PS380": null
+                }
+            ],
+            "reportAccounts": [
+                {
+                    "accountName": "BOM",
+                    "accountNo": "xxxx2664",
+                    "landingPageUrl": "https://qa-offers3.creditmantri.in/diy/auth?token=bxfthZNSlfJGmWQVkR4e1D%2F2rvGvcQEic0U8O7NSryYPeUKQc96jc3PBhYGODVWU1%2FDwHLZmVjFqUVvFjEELzrFy8567o5NtRqjwrWEqXJFREz%2BxvHzvtyqD13LpU2AgrhdkDu7hRUYm2mMoHsHZOLXUVboFrqT0kTzJOU50X16iziDCi2Sr5kFaVmNrftLpjLBMyWEVWS1xmC2rtTSg0Q%3D%3D"
+                }
+            ],
+            "cisLink": "https://qa-dashboard3.creditmantri.in/cis/",
+            "yourBorrowingsLink": "https://qa-dashboard3.creditmantri.in/credit-assessment/#your-borrowings",
+            "sccDeepLink": "https://qa-offers3.creditmantri.in/offers/9/eligibility/personal-details",
+            "yourBorrowings": "https://qa-dashboard3.creditmantri.in/credit-assessment/",
+            "IsCISSubscribed": 1
+        }
+    
+
+}
+for ( i=0; i<response.data.saleableAccountsDetails.length; i++)
+ console.log("response after for loop",response.data.saleableAccountsDetails[i].lenderId)
+// console.log("response before for loop",myObj.data.saleableAccountsCount )
+//  for ( i=0; i<myObj.data.saleableAccountsDetails.length; i++)
+//  console.log("response after for loop",myObj.data.saleableAccountsDetails[i])
 
     
 //   x += myObj.score+ "<br>"z  
@@ -79,4 +141,50 @@ document.getElementById("demo").innerHTML = x;
         console.log("Item name: "+name);
         console.log("Source: "+result[i][name].sourceUuid);
         console.log("Target: "+result[i][name].targetUuid);
+    } -->
+    <!-- {
+        "code": 200,
+        "status": "success",
+        "data": {
+            "statuscode": "200",
+            "cmolStatusCode": "80",
+            "score": "597",
+            "reportDate": "2019-07-11",
+            "nextReportDate": "2019-08-10",
+            "previousCreditScore": null,
+            "previousCreditReportDate": null,
+            "negativeAccountsCount": 1,
+            "saleableAccountsCount": 1,
+            "saleableAccountsDetails": [
+                {
+                    "lenderId": "BOM",
+                    "productId": "Education Loans",
+                    "accountNo": "XXXXXXXX2664",
+                    "accountStatusId": "Loss",
+                    "outStandingAmount": null,
+                    "bestOfferAmount": 0,
+                    "isLdb": false,
+                    "totalPaid": 0,
+                    "allocated": null,
+                    "ISARSSubscribed": 1,
+                    "PSCode": "310",
+                    "FacilityStatus": "00 To Start Action",
+                    "CRMStatus": "80 New",
+                    "PS380": null
+                }
+            ],
+            "reportAccounts": [
+                {
+                    "accountName": "BOM",
+                    "accountNo": "xxxx2664",
+                    "landingPageUrl": "https://qa-offers3.creditmantri.in/diy/auth?token=bxfthZNSlfJGmWQVkR4e1D%2F2rvGvcQEic0U8O7NSryYPeUKQc96jc3PBhYGODVWU1%2FDwHLZmVjFqUVvFjEELzrFy8567o5NtRqjwrWEqXJFREz%2BxvHzvtyqD13LpU2AgrhdkDu7hRUYm2mMoHsHZOLXUVboFrqT0kTzJOU50X16iziDCi2Sr5kFaVmNrftLpjLBMyWEVWS1xmC2rtTSg0Q%3D%3D"
+                }
+            ],
+            "cisLink": "https://qa-dashboard3.creditmantri.in/cis/",
+            "yourBorrowingsLink": "https://qa-dashboard3.creditmantri.in/credit-assessment/#your-borrowings",
+            "sccDeepLink": "https://qa-offers3.creditmantri.in/offers/9/eligibility/personal-details",
+            "yourBorrowings": "https://qa-dashboard3.creditmantri.in/credit-assessment/",
+            "IsCISSubscribed": 1
+        },
+        "errorResponse": null
     } -->
