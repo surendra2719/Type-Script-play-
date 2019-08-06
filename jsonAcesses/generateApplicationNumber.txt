@@ -1,0 +1,20 @@
+async function getApplicationNumber(stateCode: any) {
+  let timeStamp = String(Math.floor(Date.now() / 1000)).substring(4, 11);
+  let months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  let now: any = new Date().toDateString();
+  let currentYear = now.match(/\d\d\d\d/g)[0].substring(2, 4);
+  let currentDate = now.match(/\s\d\d/g)[0].replace(/\s/g, '');
+  let currentMonth = now.match(/\s\w\w\w\s/g)[0].replace(/\s/g, '');
+  for (let i = 0; i < months.length; i++) {
+    if (currentMonth === months[i]) {
+      if (String(i).length !== 1) {
+        currentMonth = String(i);
+      } else {
+        currentMonth = "0" + String(i);
+      }
+    }
+  }
+  let applicationNumber = stateCode + currentYear + currentMonth + timeStamp;
+  console.log("Application Number:", applicationNumber)
+  return applicationNumber;
+}
