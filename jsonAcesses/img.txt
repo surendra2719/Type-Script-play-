@@ -1,0 +1,62 @@
+let baseUrl = "https://helix.autonom8.com/vodafone";
+let reportsUri = "/reports";
+
+function doTask(params, state) {
+    return new Promise((resolve, reject) => {
+        console.log("Inside report service");
+        console.log("reportName:",state.context.reportName);
+        let today = moment().format('YYYY-MM-DD');
+        let name = state.context.reportName;
+        // let name = "HSDPA user throughput (kbps)";
+        let sevenDaysBefore = moment().subtract(7, 'days').format('YYYY-MM-DD');
+        let url = baseUrl + reportsUri;
+        let config = {
+            "data": {
+                "name": name,
+                "start_date": "2019-07-01",
+                "end_date": "2019-07-07",
+                "quickchart": true,
+            },
+            "method": 'post'
+        };
+        console.log('config', config.data);
+        axios(url, config).then(Response => {
+            console.log("report response:", Response.data);
+            resolve({
+                "reportData": Response.data
+            });
+        }).catch(error => {
+            console.log(error);
+            console.log("error in report response");
+            resolve({
+                "error": true
+            });
+        });
+    });
+}
+function doTask(params, state) {
+  return new Promise((resolve, reject) => {
+    if (params.reportData) {
+      let url = params.reportData.imageChartUrl;
+      let fileName = params.reportData.data.datasets.label;
+      var str = "https://quickchart.io/chart?bkg=white&c="+JSON.stringify(params.reportData);
+      str = params.reportData.imageChartUrl.replace(/\\"/gi, "'");
+      console.log("SSSSSSSSSSSSSSSSS ", str);
+      let reportUrl = {
+            "msgType": "image",
+            "desc": "PFA the image",
+            "fileName": "Report.png",
+            "fileSize": 554982,
+            "url": str
+        };
+        console.log("reportUrl:",reportUrl);
+      resolve({
+        reportUrl: JSON.stringify(reportUrl)
+      });
+    } else if (params.error) {
+      resolve({
+        reportUrl: null
+      });
+    }
+  });
+}

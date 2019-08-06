@@ -1,0 +1,47 @@
+function doTask(params, state) {
+    return new Promise((resolve, reject) => {
+        if (params.threegThroughputRncData) {
+        let throughputRncTable = {
+            "msgType": "datatable",
+            "msg": {
+                "text": "Throughput RNC IuPS Table",
+                "subText": "",
+                "header": [
+                    {
+                        "name": "Time"
+                    },
+                    {
+                        "name": "DLUL kbps"
+                    }, {
+                        "name": "DL kbps"
+                    }, {
+                        "name": "UL kbps"
+                    }
+                ],
+                "rows": []
+            }
+        };
+            let throughputRnc = params.threegThroughputRncData;
+            for (let iter = 0; iter < throughputRnc.result.length; iter++) {
+                throughputRncTable.msg.rows.push({
+                    "data": [
+                    throughputRnc.result[iter].Time,
+                    throughputRnc.result[iter].IuPS_DLUL_kbps,
+                    throughputRnc.result[iter].IuPS_DL_kbps,
+                    throughputRnc.result[iter].IuPS_UL_kbps
+                    ]
+                });
+            }
+
+            console.log("throughputRncTable", JSON.stringify(throughputRncTable));
+            resolve({
+                throughputRncTable: JSON.stringify(throughputRncTable),
+            });
+        } else if (params.error) {
+            resolve({
+                throughputRncTable: null
+            });
+        }
+    });
+}
+====================only service handler===========================

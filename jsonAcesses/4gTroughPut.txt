@@ -1,0 +1,54 @@
+function doTask(params, state) {
+    return new Promise((resolve, reject) => {
+        if (params.fourgThroughputData) {
+            let throughputTable = {
+                "msgType": "datatable",
+                "msg": {
+                    "text": "Throughput Table",
+                    "subText": "",
+                    "header": [{
+                        "name": "Counter Name"
+                    }, ],
+                    "rows": []
+                }
+            };
+            let fourgThroughPut = params.fourgThroughputData;
+            let headerArray = [];
+            for (var key in fourgThroughPut.result[0]) {
+              console.log("Inside header push");
+                if (key !== "Object" && key !== "Counter") {
+                    throughputTable.msg.header.push({
+                        "name": key
+                    });
+                    headerArray.push(key);
+                }
+            }
+            for (let iter = 0; iter < fourgThroughPut.result.length; iter++) {
+              console.log("Inside first data push");
+                throughputTable.msg.rows.push({
+                    "data": [
+                        fourgThroughPut.result[iter].Counter,
+                    ]
+                });
+            }
+            for (let iter = 0; iter < fourgThroughPut.result.length; iter++) {
+              console.log("Inside second data push");
+                for (let j = 0; j < headerArray.length; j++) {
+                    throughputTable.msg.rows[iter].data.push(
+                        fourgThroughPut.result[iter][headerArray[j]]
+                    );
+                }
+            }
+            console.log("throughputTable", JSON.stringify(throughputTable));
+            resolve({
+                throughputTable: JSON.stringify(throughputTable),
+            });
+        } else if (params.error) {
+            resolve({
+                throughputTable: null
+            });
+        }
+    });
+}
+
+====================only service handler===========================

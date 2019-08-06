@@ -1,0 +1,46 @@
+function doTask(params, state) {
+    return new Promise((resolve, reject) => {
+        if (params.clearCodeData) {
+            let clearCodeTable = {
+                "msgType": "datatable",
+                "msg": {
+                    "text": "Clear code Table",
+                    "subText": "",
+                    "header": [{
+                        "name": "Clear code"
+                    }, {
+                        "name": "  Description"
+                    }, 
+                    {
+                        "name": ""
+                    },
+                    {
+                        "name": "Value"
+                    }],
+                    "rows": []
+                }
+            };
+
+            let clearCode = params.clearCodeData;
+            for (let iter = 0; iter < clearCode.result.length; iter++) {
+                clearCodeTable.msg.rows.push({
+                    "data": [
+                        clearCode.result[iter].clearcode,
+                        clearCode.result[iter].description,
+                        clearCode.result[iter].value
+                    ]
+                });
+            }
+
+            console.log("clearCodeTable", JSON.stringify(clearCodeTable));
+            resolve({
+                clearCodeTable: JSON.stringify(clearCodeTable),
+            });
+        } else if (params.error) {
+            resolve({
+                clearCodeTable: null
+            });
+        }
+    });
+}
+====================only service handler===========================

@@ -1,0 +1,103 @@
+let baseUrl = "https://helix.autonom8.com/vodafone";
+let pathUri = "/4g";
+let mmeUri = "/mmeStatus";
+
+function doTask(params, state) {
+  console.log("Called 4G Service");
+  return new Promise((resolve, reject) => {
+    let url = baseUrl + pathUri;
+    let config = {
+      "json": true,
+      "method": 'GET'
+    };
+    axios(url, config).then(response => {
+      console.log("Got 4G Response", response.data);
+      let mmeUrl = baseUrl + mmeUri;
+      axios(mmeUrl, config).then(mmeResponse => {
+        resolve({
+          "fourGData": response.data,
+          "mmeData": mmeResponse.data
+        });
+      }).catch(error =>{
+        console.log("Error in MME response");
+        resolve({
+          "error": true
+        });
+      });
+
+
+    }).catch(error => {
+      console.log(error);
+      console.log("error in 4G response");
+      resolve({
+        "error": true
+      });
+    });
+  });
+}
+
+
+function doTask(params, state) {
+  return new Promise((resolve, reject) => {
+    console.log("4g Data in Service Handler:", params.data);
+    if (params.fourGData && params.mmeData) {
+      let mmeTable = {
+        "msgType": "datatable",
+        "msg": {
+          "text": "MME Table",
+          "subText": "",
+          "header": [{
+            "name": "MO"
+          },
+          {
+            "name": "State"
+          }
+          ],
+          "rows": []
+        }
+      };
+      let mmeText = "";
+      let fourGData = params.fourGData;
+      let mmeData = params.mmeData;
+      let sectorText = "";
+      let sectorStatus = "";
+      for (let iter = 0; iter < fourGData.result.length; iter++) {
+        let functionText = fourGData.result[iter].MO.match(/Function=(\w+)/gi)[0];
+        let sectorNumber = functionText.match(/(?!Function=)(S\d+)/gi)[0];
+        if (fourGData.result[iter].State.toLowerCase() === "enable") {
+          sectorStatus = "up";
+        } else {
+          sectorStatus = "down";
+        }
+        sectorText = sectorText.concat("#  Sector " + sectorNumber + " - " + sectorStatus + "\n");
+      }
+      for (let mmeIter = 0; mmeIter < mmeData.result.length; mmeIter++){
+        let tempmmeText = mmeData.result[mmeIter].MO.match(/MME(\w+)/gi)[0];
+        
+        mmeTable.msg.rows.push({
+          "data": [
+            tempmmeText,
+            mmeData.result[mmeIter].State.toLowerCase()
+          ]
+        });
+        if (mmeData.result[mmeIter].State.toLowerCase() === "enable") {
+          sectorStatus = "up";
+        } else {
+          sectorStatus = "down";
+        }
+        mmeText = mmeText.concat("# "+ tempmmeText + " is " + sectorStatus + "\n");
+      }
+        console.log("SectorText:", sectorText);
+        console.log("MMe table:",mmeTable);
+      resolve({
+        sectorText: sectorText,
+        mmeTable: JSON.stringify(mmeTable),
+        mmeText: mmeText
+      });
+    } else if (params.error) {
+      resolve({
+        sectorText: null
+      });
+    }
+  });
+}

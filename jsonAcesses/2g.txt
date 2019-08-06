@@ -1,0 +1,65 @@
+let baseUrl = "https://helix.autonom8.com/vodafone";
+let pathUri = "/2g";
+
+function doTask(params,state) {
+    console.log("Called 2G Service");
+    return new Promise((resolve, reject) => {
+        let url = baseUrl + pathUri;
+        let config = {
+            "json": true,
+            "method": 'GET'
+        };
+        axios(url, config).then(response => {
+            console.log("Got 2G Response",response.data);
+            resolve({
+            "data": response.data
+            });
+        }).catch(error => {
+            console.log(error);
+            console.log("error in 2G response");
+            resolve({
+              "error": true
+            });
+        });
+    });
+}
+
+function doTask(params, state) {
+  return new Promise((resolve, reject) => {
+    console.log("2g Data in Service Handler:", params.data);
+    busyChannels = params.data.BUSYCHANNELS;
+    let busyChannelText = "";
+    if(busyChannels.length !== 0){
+      busyChannelText = busyChannelText.concat("There are:\n");
+      let gprsChannels = 0;
+      let speechChannels = 0;
+      for (let iter =0; iter< busyChannels.length; iter++){
+        if(busyChannels[iter].USE.toLowerCase() === "gprs"){
+          gprsChannels += 1;
+        }
+        if(busyChannels[iter].USE.toLowerCase() === "speech"){
+          speechChannels += 1;
+        }
+      }
+      if(gprsChannels > 0){
+        busyChannelText = busyChannelText.concat("\n #  " + gprsChannels + " channels using GPRS");
+      }
+      if(speechChannels > 0){
+        busyChannelText = busyChannelText.concat("\n #  " + speechChannels + " channels using speech");
+      }
+    } else{
+      busyChannelText = "There are no busy or used channels";
+    }
+    console.log("BusyChannelText:",busyChannelText);
+    if (params.data) {
+      resolve({
+        sector: params.data.sector,
+        busyChannelText: busyChannelText
+      });
+    } else if (params.error) {
+      resolve({
+        sector: null
+      });
+    }
+  });
+}
