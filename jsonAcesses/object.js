@@ -1,9 +1,16 @@
 var data = {
 
     "name": "surendra",
-    "job": "job"
+    "job": [{"jobname":"surendra"}]
+    
 
 }
+var keys = Object.keys(data);
+
+keys.forEach(function(key){
+  console.log(data[key]);
+})
+
 // var pardata=data.name
 // console.log("pardata",pardata);
 
